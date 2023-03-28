@@ -8,5 +8,7 @@ public interface WordRelationService {
 
     WordRelationDTO create(WordRelationDTO dto);
 
-    List<WordRelationDTO> getAll();
+    List<WordRelationDTO> FindAll();
+
+    List<WordRelationDTO> findByType(String type);
 }

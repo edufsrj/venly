@@ -21,8 +21,16 @@ public class WordRelationServiceImpl implements WordRelationService {
     }
 
     @Override
-    public List<WordRelationDTO> getAll() {
+    public List<WordRelationDTO> FindAll() {
         return repository.findAll()
+                .stream()
+                .map(this::toDTO)
+                .toList();
+    }
+
+    @Override
+    public List<WordRelationDTO> findByType(String type) {
+        return repository.findByType(type)
                 .stream()
                 .map(this::toDTO)
                 .toList();

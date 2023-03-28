@@ -25,7 +25,12 @@ public class WordRelationController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<WordRelationDTO>> list(WordRelationDTO dto) {
-        return new ResponseEntity<>(service.getAll(), HttpStatus.OK);
+    public ResponseEntity<List<WordRelationDTO>> list() {
+        return new ResponseEntity<>(service.FindAll(), HttpStatus.OK);
+    }
+
+    @GetMapping("/type/{type}")
+    public ResponseEntity<List<WordRelationDTO>> listByType(String type) {
+        return new ResponseEntity<>(service.findByType(type), HttpStatus.OK);
     }
 }
