@@ -6,7 +6,6 @@ import com.testgorilla.venly.model.WordRelation;
 import com.testgorilla.venly.repository.WordRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.List;
 
 @Service
@@ -28,13 +27,8 @@ public class WordRelationServiceImpl implements WordRelationService {
             throw new IllegalAccessException("Invalid words");
         }
 
-
         var model = toModel(dto);
-        //check inverse
-        var data = new HashSet<WordRelationDTO>(findAll());
-        if (data.contains(model)) {
-            throw new IllegalArgumentException("Inverse relation is not allowed!");
-        }
+        checkInverse(model);
 
         return toDTO(repository.save(model));
     }
@@ -63,5 +57,14 @@ public class WordRelationServiceImpl implements WordRelationService {
         return new WordRelationDTO(model.getWord1(),
                 model.getWord2(),
                 model.getType());
+    }
+
+    private void checkInverse(WordRelation model) {
+        boolean inverseExists = repository.findAll().stream()
+                .anyMatch(relation -> relation.getWord1().equals(model.getWord2()) && relation.getWord2().equals(model.getWord1()));
+
+        if (inverseExists) {
+            throw new IllegalArgumentException("Inverse relation is not allowed!");
+        }
     }
 }
