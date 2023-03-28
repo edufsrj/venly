@@ -4,7 +4,6 @@ import com.testgorilla.venly.common.WordType;
 import com.testgorilla.venly.common.dto.WordRelationDTO;
 import com.testgorilla.venly.model.WordRelation;
 import com.testgorilla.venly.repository.WordRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,8 +11,11 @@ import java.util.List;
 @Service
 public class WordRelationServiceImpl implements WordRelationService {
 
-    @Autowired
-    WordRepository repository;
+    final WordRepository repository;
+
+    public WordRelationServiceImpl(WordRepository repository) {
+        this.repository = repository;
+    }
 
     public WordRelationDTO create(WordRelationDTO dto) throws IllegalAccessException {
 
