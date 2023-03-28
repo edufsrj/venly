@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface WordRelationService {
 
-    WordRelationDTO create(WordRelationDTO dto);
+    WordRelationDTO create(WordRelationDTO dto) throws IllegalAccessException;
 
     List<WordRelationDTO> FindAll();
 

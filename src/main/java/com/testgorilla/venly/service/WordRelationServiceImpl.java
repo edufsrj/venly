@@ -14,7 +14,12 @@ public class WordRelationServiceImpl implements WordRelationService {
     @Autowired
     WordRepository repository;
 
-    public WordRelationDTO create(WordRelationDTO dto) {
+    public WordRelationDTO create(WordRelationDTO dto) throws IllegalAccessException {
+
+        if (!dto.w1().matches("^[a-zA-Z]+$") && !dto.w1().matches("^[a-zA-Z]+$")) {
+            throw new IllegalAccessException("Invalid words");
+        }
+
         var model = toModel(dto);
 
         return toDTO(repository.save(model));
