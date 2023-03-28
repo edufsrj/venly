@@ -20,7 +20,7 @@ public class WordRelationController {
     private WordRelationService service;
 
     @PostMapping("/")
-    public ResponseEntity<WordRelationDTO> wordRcreateelations(WordRelationDTO dto) {
+    public ResponseEntity<WordRelationDTO> wordRcreateelations(WordRelationDTO dto) throws IllegalAccessException {
         return new ResponseEntity<>(service.create(dto), HttpStatus.OK);
     }
 

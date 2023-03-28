@@ -1,5 +1,6 @@
 package com.testgorilla.venly.service;
 
+import com.testgorilla.venly.common.WordType;
 import com.testgorilla.venly.common.dto.WordRelationDTO;
 import com.testgorilla.venly.model.WordRelation;
 import com.testgorilla.venly.repository.WordRepository;
@@ -43,11 +44,7 @@ public class WordRelationServiceImpl implements WordRelationService {
 
 
     public WordRelation toModel(WordRelationDTO dto) {
-        return WordRelation.builder()
-                .word1(dto.w1().toLowerCase().trim())
-                .word2(dto.w2().toLowerCase().trim())
-                .type(dto.type().toLowerCase().trim())
-                .build();
+        return new WordRelation(dto.w1(), dto.w2(), WordType.valueOf(dto.type()));
     }
     public WordRelationDTO toDTO(WordRelation model) {
         return WordRelationDTO.builder()
