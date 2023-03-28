@@ -39,9 +39,9 @@ public class WordRelationServiceImpl implements WordRelationService {
 
     public WordRelation toModel(WordRelationDTO dto) {
         return WordRelation.builder()
-                .word1(dto.w1())
-                .word2(dto.w2())
-                .type(dto.type())
+                .word1(dto.w1().toLowerCase().trim())
+                .word2(dto.w2().toLowerCase().trim())
+                .type(dto.type().toLowerCase().trim())
                 .build();
     }
     public WordRelationDTO toDTO(WordRelation model) {

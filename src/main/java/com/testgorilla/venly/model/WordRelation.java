@@ -1,6 +1,5 @@
 package com.testgorilla.venly.model;
 
-import com.testgorilla.venly.common.WordType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -28,6 +27,6 @@ public class WordRelation {
     private String word1;
     private String word2;
     @Enumerated(EnumType.STRING)
-    private WordType type;
+    private String type;
 
 }
