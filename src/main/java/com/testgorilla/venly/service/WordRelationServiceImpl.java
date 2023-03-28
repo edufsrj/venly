@@ -6,6 +6,7 @@ import com.testgorilla.venly.model.WordRelation;
 import com.testgorilla.venly.repository.WordRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 
 @Service
@@ -19,17 +20,27 @@ public class WordRelationServiceImpl implements WordRelationService {
 
     public WordRelationDTO create(WordRelationDTO dto) throws IllegalAccessException {
 
-        if (!dto.w1().matches("^[a-zA-Z]+$") && !dto.w1().matches("^[a-zA-Z]+$")) {
+        if (!dto.w1().matches("^[a-zA-Z\\s]+$")) {
             throw new IllegalAccessException("Invalid words");
         }
 
+        if (!dto.w2().matches("^[a-zA-Z\\s]+$")) {
+            throw new IllegalAccessException("Invalid words");
+        }
+
+
         var model = toModel(dto);
+        //check inverse
+        var data = new HashSet<WordRelationDTO>(findAll());
+        if (data.contains(model)) {
+            throw new IllegalArgumentException("Inverse relation is not allowed!");
+        }
 
         return toDTO(repository.save(model));
     }
 
     @Override
-    public List<WordRelationDTO> FindAll() {
+    public List<WordRelationDTO> findAll() {
         return repository.findAll()
                 .stream()
                 .map(this::toDTO)
@@ -46,15 +57,11 @@ public class WordRelationServiceImpl implements WordRelationService {
 
 
     public WordRelation toModel(WordRelationDTO dto) {
-        return new WordRelation(dto.w1(), dto.w2(), WordType.valueOf(dto.type()));
+        return new WordRelation(dto.w1(), dto.w2(), WordType.valueOf(dto.type().toUpperCase()));
     }
     public WordRelationDTO toDTO(WordRelation model) {
-        return WordRelationDTO.builder()
-                .w1(model.getWord1())
-                .w2(model.getWord2())
-                .type(model.getType())
-                .build();
+        return new WordRelationDTO(model.getWord1(),
+                model.getWord2(),
+                model.getType());
     }
-
-
 }

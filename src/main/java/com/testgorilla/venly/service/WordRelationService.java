@@ -8,7 +8,7 @@ public interface WordRelationService {
 
     WordRelationDTO create(WordRelationDTO dto) throws IllegalAccessException;
 
-    List<WordRelationDTO> FindAll();
+    List<WordRelationDTO> findAll();
 
     List<WordRelationDTO> findByType(String type);
 }

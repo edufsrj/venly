@@ -23,7 +23,6 @@ public class WordRelation {
     public WordRelation(String word1, String word2, WordType type) {
         this.word1 = Objects.requireNonNull(word1);
         this.word2 = Objects.requireNonNull(word2);
-        this.type = Objects.requireNonNull(type.toString().toLowerCase());
 
         if (type == WordType.SYNONYM && word1.equals(word2)) {
             throw new IllegalArgumentException("Synonyms must have different words");
@@ -36,6 +35,8 @@ public class WordRelation {
         if (type == WordType.RELATED && word1.equals(word2)) {
             throw new IllegalArgumentException("Antonyms must have different words");
         }
+
+        this.type = Objects.requireNonNull(type.name().toLowerCase());
     }
 
     @Id
@@ -44,4 +45,17 @@ public class WordRelation {
     private String word1;
     private String word2;
     private String type;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof WordRelation)) return false;
+        WordRelation that = (WordRelation) o;
+        return Objects.equals(word1, that.word1) && Objects.equals(word2, that.word2) && type == that.type;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(word1, word2, type);
+    }
 }
